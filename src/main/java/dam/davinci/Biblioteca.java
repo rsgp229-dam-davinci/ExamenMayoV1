@@ -1,6 +1,5 @@
 package dam.davinci;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -49,8 +48,7 @@ public class Biblioteca {
 
     private Connection getConnection() throws IOException, SQLException {
         Properties properties = new Properties();
-        FileReader reader = new FileReader("database.properties");
-        properties.load(reader);
+        properties.load(this.getClass().getResourceAsStream("/database.properties"));
         return DriverManager.getConnection(
                     properties.getProperty("url"),
                     properties.getProperty("user"),
@@ -58,7 +56,7 @@ public class Biblioteca {
     }
 
     public boolean guardarEnBaseDeDatos(Libro libro) {
-        String statement = "INSERT INTO persons (author, title) values (?,?)";
+        String statement = "INSERT INTO libros (author, title) values (?,?)";
         try(Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(statement)) {
             preparedStatement.setString(1,libro.getAuthor());
@@ -68,6 +66,7 @@ public class Biblioteca {
         } catch (Exception e) {
             System.err.println("Ha ocurrido algún problema durante la inserción en la base de datos");
             System.err.println(e.getMessage());
+            e.printStackTrace();
         }
         return false;
     }
