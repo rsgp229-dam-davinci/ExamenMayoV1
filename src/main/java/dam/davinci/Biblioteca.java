@@ -80,11 +80,26 @@ public class Biblioteca {
      * @return Indica si se ha podido guardar o no el libro en la base de datos
      */
     public boolean guardarEnBaseDeDatos(Libro libro) {
-        String statement = "INSERT INTO libros (author, title) values (?,?)";
+        if (libro == null) return false;
+        String statement = null;
+        PreparedStatement ps = null;
+        if (libro instanceof LibroDigital){
+            statement = "INSERT INTO libros (author, title, mb_size) values (?,?,?)";
+        } else if (libro instanceof LibroImpreso){
+            statement = "INSERT INTO libros (author, title, pages) values (?,?,?)";
+        } else {
+            return false;
+        }
+
         try(Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(statement)) {
             preparedStatement.setString(1,libro.getAuthor());
             preparedStatement.setString(2, libro.getTitle());
+            if (libro instanceof LibroDigital){
+                preparedStatement.setInt(3, ((LibroDigital) libro).getTamanioArchivo());
+            } else {
+                preparedStatement.setInt(3,((LibroImpreso) libro).getNumeroPaginas());
+            } 
             preparedStatement.execute();
             return true;
         } catch (Exception e) {
