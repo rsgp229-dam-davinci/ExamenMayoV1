@@ -99,12 +99,14 @@ public class Biblioteca {
                 preparedStatement.setInt(3, ((LibroDigital) libro).getTamanioArchivo());
             } else {
                 preparedStatement.setInt(3,((LibroImpreso) libro).getNumeroPaginas());
-            } 
+            }
             preparedStatement.execute();
             return true;
-        } catch (Exception e) {
-            System.err.println("Ha ocurrido algún problema durante la inserción en la base de datos");
-            System.err.println(e.getMessage());
+        } catch (IOException e) {
+            System.err.println("Ha ocurrido algún problema con el archivo de configuración");
+            e.printStackTrace();
+        } catch (SQLException e) {
+            System.err.println("Ha ocurrido algún problema con la inserción en la base de datos");
             e.printStackTrace();
         }
         return false;
