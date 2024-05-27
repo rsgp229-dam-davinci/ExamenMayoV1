@@ -3,6 +3,9 @@ package dam.davinci;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * Implementación de un libro en formato papel
+ */
 public class LibroImpreso extends Libro implements Guardable{
 
     private int numeroPaginas;
@@ -13,6 +16,16 @@ public class LibroImpreso extends Libro implements Guardable{
         this.numeroPaginas = numeroPaginas;
     }
 
+    /**
+     * <p>Guarda el libro en un archivo de texto plano con extensión '.txt' en el
+     * directorio raiz del ejecutable. La información que guarda en el archivo
+     * es la que se obtenga del método 'mostrarInformacion()'</p>
+     * <p>En caso de error se aborta la operación. El método controla la
+     * excepción e informa por consola de la causa del error</p>
+     *
+     * @see Guardable
+     * @see #mostrarInformacion()
+     */
     @Override
     public void guardar() {
         String pathFile = getTitle()+".txt";
@@ -24,6 +37,11 @@ public class LibroImpreso extends Libro implements Guardable{
         }
     }
 
+    /**
+     * <p>Muestra la información concreta del libro impreso en una única línea
+     * de texto según lo indicado en la clase abstracta Libro</p>
+     * @return La información del libro en una única línea de texto
+     */
     @Override
     public String mostrarInformacion() {
         StringBuilder sb = new StringBuilder();
