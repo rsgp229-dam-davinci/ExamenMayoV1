@@ -7,7 +7,7 @@ class BibliotecaTest {
     @org.junit.jupiter.api.Test
     void guardarEnBaseDeDatos() {
         Biblioteca b = new Biblioteca();
-        Libro l = new LibroImpreso("Los tres mosqueteros", "Alejandro Dumas", 267);
+        Libro l = new LibroImpreso("Sandokan", "Emilio Salgari", 267);
         assertDoesNotThrow(() -> b.guardarEnBaseDeDatos(l));
     }
 }
